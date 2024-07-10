@@ -22,6 +22,8 @@ struct LoginView: View {
                     .frame(width: 120, height: 120)
                     .padding(.vertical, 32)
                     .clipShape(Circle())
+                    .overlay(Circle().stroke(.black, lineWidth: 2))
+                    
                 
                 Text("ExpensesDivider")
                     .font(.title)
@@ -30,7 +32,7 @@ struct LoginView: View {
                 //Campos
                 VStack(spacing: 24){
                     InputView(text: $email, title: "Email", placeholder: "nombre@ejemplo.com")
-                        .textInputAutocapitalization(.none)
+                        .textInputAutocapitalization(.never)
                     
                     InputView(text: $password, title: "Contraseña", placeholder: "Introduce tu contraseña", isSecureField: true)
                 }
@@ -41,7 +43,7 @@ struct LoginView: View {
                 
                 Button {
                     Task{
-                        try await viewModel.singIn(withEmail: email, password: password)
+                        try await viewModel.signIn(withEmail: email, password: password)
                     }
                 } label: {
                     HStack{
@@ -53,6 +55,8 @@ struct LoginView: View {
                     .frame(width: UIScreen.main.bounds.width - 32, height: 48)
                 }
                 .background(Color(.systemMint))
+                .disabled(!formIsValid)
+                .opacity(formIsValid ? 1.0 : 0.5)
                 .clipShape(.rect(cornerRadius: 10))
                 .padding(.top, 10)
                 
@@ -73,6 +77,15 @@ struct LoginView: View {
                 }
             }
         }
+    }
+}
+
+extension LoginView: AuthenticationFormProtocol {
+    var formIsValid: Bool {
+        return !email.isEmpty
+        && email.contains("@")
+        && !password.isEmpty
+        && password.count>5
     }
 }
 

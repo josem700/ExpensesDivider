@@ -24,6 +24,7 @@ struct RegistrationView: View {
                 .frame(width: 120, height: 120)
                 .padding(.vertical, 32)
                 .clipShape(Circle())
+                .overlay(Circle().stroke(.black, lineWidth: 2)) 
             
             Text("ExpensesDivider")
                 .font(.title)
@@ -32,18 +33,35 @@ struct RegistrationView: View {
         
             VStack(spacing: 24){
                 InputView(text: $email, title: "Email", placeholder: "nombre@ejemplo.com")
-                    .textInputAutocapitalization(.none)
+                    .textInputAutocapitalization(.never)
                 
                 InputView(text: $fullname, title: "Nombre Completo", placeholder: "Introduce tu nombre")
                     .textInputAutocapitalization(.words)
                 
                 InputView(text: $password, title: "Contraseña", placeholder: "Introduce tu contraseña", isSecureField: true)
                 
-                InputView(text: $confirmPassword, title: "Confirma Contraseña", placeholder: "Confirma tu contraseña", isSecureField: true)
+                ZStack(alignment: .trailing){
+                    InputView(text: $confirmPassword, title: "Confirma Contraseña", placeholder: "Confirma tu contraseña", isSecureField: true)
+                
+                    if(!password.isEmpty && !confirmPassword.isEmpty){
+                        if password == confirmPassword{
+                            Image(systemName: "checkmark.circle.fill")
+                                .imageScale(.large)
+                                .fontWeight(.bold)
+                                .foregroundColor(Color(.systemGreen))
+                        }else{
+                            Image(systemName: "xmark.circle.fill")
+                                .imageScale(.large)
+                                .fontWeight(.bold)
+                                .foregroundColor(Color(.systemRed))
+                        }
+                    }
+                }
             }
             .padding(.horizontal)
             .padding(.top, 12)
             
+            //Boton registro
             Button {
                 Task{
                     try await viewModel.createUser(withEmail:email,
@@ -60,6 +78,8 @@ struct RegistrationView: View {
                 .frame(width: UIScreen.main.bounds.width - 32, height: 48)
             }
             .background(Color(.systemMint))
+            .disabled(!formIsValid)
+            .opacity(formIsValid ? 1.0 : 0.5)
             .clipShape(.rect(cornerRadius: 10))
             .padding(.top, 20)
             
@@ -76,6 +96,18 @@ struct RegistrationView: View {
                 .font(.system(size: 14))
             }
         }
+    }
+}
+
+//Con esta extension hacemos que la variable formisvalid sea true o false en funcion de una serie de condiciones
+extension RegistrationView: AuthenticationFormProtocol {
+    var formIsValid: Bool {
+        return !email.isEmpty
+        && email.contains("@")
+        && !password.isEmpty
+        && password.count>5
+        && !fullname.isEmpty
+        && password==confirmPassword
     }
 }
 
