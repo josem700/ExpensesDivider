@@ -44,7 +44,7 @@ class AuthViewModel: ObservableObject{
         }
     }
     
-    func createUser(withEmail email: String, password: String, fullname: String) async throws{
+    func createUser(withEmail email: String, password: String, name: String, surname:String) async throws{
         //Crear Usuario
         print("Create User")
         do{
@@ -52,7 +52,7 @@ class AuthViewModel: ObservableObject{
             let result = try await Auth.auth().createUser(withEmail: email, password: password)
             self.userSession = result.user
             //Rellenamos nuestro modelo local de usuario, lo creamos
-            let user = User(id: result.user.uid, fullname: fullname, email: email)
+             let user = User(id: result.user.uid, name: name,surname: surname, email: email, createdAt: Date(),userGroups: [])
             //Una vez nuestro objeto usuario esta quedado, lo encodeamos
             let encodedUser = try Firestore.Encoder().encode(user)
             //Una vez todo creado correcto, subimos a Firebase nuestro nuevo usuario creado

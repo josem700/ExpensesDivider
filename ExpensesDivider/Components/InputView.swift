@@ -18,7 +18,7 @@ struct InputView: View {
             Text(title)
                 .foregroundStyle(Color(.darkGray))
                 .fontWeight(.semibold)
-                .font(.footnote)
+                .font(.title2)
             
             if isSecureField{
                 SecureField(placeholder, text: $text)
@@ -26,6 +26,8 @@ struct InputView: View {
             }else{
                 TextField(placeholder, text: $text)
                     .font(.system(size: 14))
+                    .background(Color(.clear))
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
             }
             
             Divider()
