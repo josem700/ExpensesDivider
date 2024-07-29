@@ -17,5 +17,5 @@ struct PrincipalView: View {
 }
 
 #Preview {
-    PrincipalView().environmentObject(AuthViewModel())
+    PrincipalView().environmentObject(AuthViewModel()).environmentObject(GroupViewModel())
 }

@@ -23,7 +23,7 @@ struct RegistrationView: View {
                 .resizable()
                 .scaledToFill()
                 .frame(width: 120, height: 120)
-                .padding(.vertical, 32)
+                .padding(.vertical,20)
                 .clipShape(Circle())
                 .overlay(Circle().stroke(.black, lineWidth: 2)) 
             
@@ -99,6 +99,7 @@ struct RegistrationView: View {
                         .fontWeight(.bold)
                 }
                 .font(.system(size: 14))
+                .padding(.bottom, 20)
             }
         }
     }

@@ -11,6 +11,7 @@ import Firebase
 @main
 struct ExpensesDividerApp: App {
     @StateObject var ViewModel = AuthViewModel()
+    @StateObject var GroupModel = GroupViewModel()
     init(){
         FirebaseApp.configure()
     }
@@ -19,6 +20,7 @@ struct ExpensesDividerApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(ViewModel)
+                .environmentObject(GroupModel)
         }
     }
 }

@@ -18,14 +18,16 @@ protocol AuthenticationFormProtocol{
 class AuthViewModel: ObservableObject{
     @Published var userSession: FirebaseAuth.User?
     @Published var currentUser: User?
+    @Published var userGroups: [ExpensesGroup]?
     
     init(){
         //Comprueba si hay un usuario logueado al entrar en la app
         self.userSession = Auth.auth().currentUser
-        
+        //signOut()
         Task{
             //Obtenemos datos del usuario
             await fetchUser()
+            await fetchGroups()
         }
     }
     
@@ -92,6 +94,17 @@ class AuthViewModel: ObservableObject{
         guard let snapshot = try? await Firestore.firestore().collection("users").document(uid).getDocument() else {return}
         //Como la clase User es codable, podemos meterle directamente el usuario
         self.currentUser = try? snapshot.data(as: User.self)
-        print("DEBUG: Usuario actual: \(self.currentUser)")
+        print("DEBUG: Usuario actual: \(String(describing: self.currentUser))")
+    }
+    
+    func fetchGroups() async{
+        //Devuelve los grupos a los que pertenece el usuario
+        let groupsIds: [String] = currentUser?.userGroups ?? []
+        
+        for group in groupsIds {
+            guard let snapshot = try? await Firestore.firestore().collection("groups").document(group).getDocument() else {return}
+            guard let group = try? snapshot.data(as: ExpensesGroup.self) else {continue}
+            userGroups?.append(group)
+        }
     }
 }

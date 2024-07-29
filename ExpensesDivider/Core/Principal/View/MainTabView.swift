@@ -8,29 +8,32 @@
 import SwiftUI
 
 struct MainTabView: View {
-    @StateObject var groupVM = GroupViewModel()
+    @EnvironmentObject var authVM: AuthViewModel
+    @State private var showingSheet = false
     var body: some View {
         TabView{
             HStack{
-                Button(){
-                    
-                }label: {
-                    if groupVM.userGroups.count<1{
+                if (authVM.userGroups?.count<1){
+                    Button{
+                        showingSheet = true
+                    }label: {
                         Text("Añadir Grupo")
                             .font(.title3)
                             .fontWeight(.semibold)
-                        
                         Image(systemName: "plus.circle")
                             .resizable()
                             .frame(width: 30, height: 30)
                             .scaledToFill()
                             .padding(2)
-                    }else{
-                        ScrollView{
-                            LazyVGrid(columns: [GridItem(.adaptive(minimum: 100))]){
-                                ForEach(groupVM.userGroups) { group in
-                                    GroupViewCell(cellTitle: group.title)
-                                }
+                    }
+                    .sheet(isPresented: $showingSheet){
+                        AddGroupView()
+                    }
+                }else{
+                    ScrollView{
+                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 100))]){
+                            ForEach(authVM.userGroups!) { group in
+                                GroupViewCell(cellTitle: group.title)
                             }
                         }
                     }
@@ -49,5 +52,5 @@ struct MainTabView: View {
 }
 
 #Preview {
-    MainTabView()
+    MainTabView().environmentObject(AuthViewModel())
 }
