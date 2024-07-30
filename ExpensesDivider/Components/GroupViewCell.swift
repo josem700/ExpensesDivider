@@ -11,32 +11,31 @@ struct GroupViewCell: View {
     @State var cellTitle:String
     @State private var showingAlert = false
     var body: some View {
-        VStack{
-            HStack{
-                Spacer()
-                Button{
-                    //Alerta
-                    showingAlert = true
-                }label: {
-                    Image(systemName: "xmark.app").padding(20)
-                        .imageScale(.medium)
-                        .font(.title)
-                        .foregroundColor(.red)
-                }
-                .alert("¿Desea borrar el grupo? Se mantendrán las deudas pendientes", isPresented: $showingAlert) {
-                    
-                    Button("Aceptar"){
-                        //Funcion borrar grupo
-                    }
-                    Button("Borrar", role: .destructive){
-                        //Borrar grupo
-                    }
-                }
-            }
+        VStack(alignment: .center, spacing: 20){
+         //   HStack{
+//                Button{
+//                    //Alerta
+//                    showingAlert = true
+//                }label: {
+//                    Image(systemName: "xmark.app").padding(20)
+//                        .imageScale(.medium)
+//                        .font(.title)
+//                        .foregroundColor(.red)
+//                }
+//                .alert("¿Desea borrar el grupo? Se mantendrán las deudas pendientes", isPresented: $showingAlert) {
+//                    
+//                    Button("Aceptar"){
+//                        //Funcion borrar grupo
+//                    }
+//                    Button("Borrar", role: .destructive){
+//                        //Borrar grupo
+//                    }
+//                }
+        //    }
           Text(cellTitle)
-                .font(.title)
+                .font(.caption)
                 .fontWeight(.bold)
-            Spacer()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
         }.background(Color(.systemMint))
     }
 }

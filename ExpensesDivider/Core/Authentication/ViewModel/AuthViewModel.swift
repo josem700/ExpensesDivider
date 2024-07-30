@@ -18,11 +18,12 @@ protocol AuthenticationFormProtocol{
 class AuthViewModel: ObservableObject{
     @Published var userSession: FirebaseAuth.User?
     @Published var currentUser: User?
-    @Published var userGroups: [ExpensesGroup]?
+    @Published var userGroups: [ExpensesGroup]
     
     init(){
         //Comprueba si hay un usuario logueado al entrar en la app
         self.userSession = Auth.auth().currentUser
+        self.userGroups = []
         //signOut()
         Task{
             //Obtenemos datos del usuario
@@ -99,12 +100,13 @@ class AuthViewModel: ObservableObject{
     
     func fetchGroups() async{
         //Devuelve los grupos a los que pertenece el usuario
+        await fetchUser()
         let groupsIds: [String] = currentUser?.userGroups ?? []
-        
+        userGroups.removeAll()
         for group in groupsIds {
             guard let snapshot = try? await Firestore.firestore().collection("groups").document(group).getDocument() else {return}
             guard let group = try? snapshot.data(as: ExpensesGroup.self) else {continue}
-            userGroups?.append(group)
+            userGroups.append(group)
         }
     }
 }

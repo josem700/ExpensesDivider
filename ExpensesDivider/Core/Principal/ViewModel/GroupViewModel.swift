@@ -25,8 +25,8 @@ class GroupViewModel: ObservableObject{
             let group = ExpensesGroup(id: id, title: title, currency: currency, members: members)
             let encodedGroup = try Firestore.Encoder().encode(group)
             try await db.collection("groups").document(id).setData(encodedGroup)
-            var usergrp = currentUser!.userGroups
-            usergrp?.append(id)
+            var usergrp = currentUser!.userGroups ?? []
+            usergrp.append(id)
             try await db.collection("users").document(currentUser!.id).updateData(["userGroups":usergrp])
         }catch{
             //Si ha habido algún error durante el proceso, lo imprimimos por consola
@@ -37,5 +37,6 @@ class GroupViewModel: ObservableObject{
     
     func deleteGroup(groupId: String){
         db.collection("groups").document(groupId).delete()
+        
     }
 }

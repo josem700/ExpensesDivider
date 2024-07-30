@@ -85,15 +85,14 @@ struct AddGroupView: View {
                 Button("Aceptar"){
                     //Funcion crear grupo
                     Task{
+                        //await authVM.fetchUser()
                         try await groupVM.createGroup(title: groupTitle, currency: selectedCurrency, members: groupUsers, currentUser: authVM.currentUser)
+                        //await authVM.fetchUser()
                         await authVM.fetchGroups()
                     }
                     dismiss()
                 }
                 
-                Button("Cancelar", role: .destructive){
-                    //No hace nada
-                }
             }
             .background(Color(.systemMint))
             .disabled(!formIsValid)
