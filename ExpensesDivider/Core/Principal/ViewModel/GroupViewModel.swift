@@ -12,8 +12,11 @@ import FirebaseFirestoreSwift
 class GroupViewModel: ObservableObject{
     
     let db = Firestore.firestore()
+    @Published var groupExpenses:[GroupExpense]
+    @Published var currentGroup: ExpensesGroup?
     
     init(){
+        self.groupExpenses = []
     }
     
     func createGroup(title: String, currency: String, members: [String], currentUser:User?) async throws{
@@ -22,7 +25,7 @@ class GroupViewModel: ObservableObject{
             //Primero creamos el grupo
             let id = UUID().uuidString
             if(currentUser==nil){return}
-            let group = ExpensesGroup(id: id, title: title, currency: currency, members: members)
+            let group = ExpensesGroup(id: id, title: title, currency: currency, members: members, groupExpenses: [])
             let encodedGroup = try Firestore.Encoder().encode(group)
             try await db.collection("groups").document(id).setData(encodedGroup)
             var usergrp = currentUser!.userGroups ?? []
@@ -37,6 +40,15 @@ class GroupViewModel: ObservableObject{
     
     func deleteGroup(groupId: String){
         db.collection("groups").document(groupId).delete()
-        
+    }
+    
+    func fetchExpenses() async{
+        let expensesIds:[String] = currentGroup?.groupExpenses ?? []
+        groupExpenses.removeAll()
+        for expense in expensesIds{
+            guard let snapshot = try? await db.collection("expenses").document(expense).getDocument() else {return}
+            guard let expense = try? snapshot.data(as: GroupExpense.self) else {continue}
+            groupExpenses.append(expense)
+        }
     }
 }

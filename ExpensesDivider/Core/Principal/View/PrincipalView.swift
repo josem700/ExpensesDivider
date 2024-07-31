@@ -11,8 +11,10 @@ struct PrincipalView: View {
     @EnvironmentObject var ViewModel: AuthViewModel
     
     var body: some View {
-        HeaderView()
-        MainTabView()
+        NavigationStack{
+            HeaderView()
+            MainTabView()
+        }
     }
 }
 
