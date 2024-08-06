@@ -10,10 +10,29 @@ import SwiftUI
 struct GroupView: View {
     @State var currentGroup: ExpensesGroup
     @EnvironmentObject var groupVM: GroupViewModel
+    @State var expenseVM = ExpensesViewModel()
+    @State var sheetPresented = false
+    
     var body: some View {
         TabView{
-            HStack{
-                
+            VStack{
+                if(currentGroup.groupExpenses.isEmpty){
+                    Button{
+                        sheetPresented = true
+                    }label: {
+                        Text("Añadir Gasto")
+                            .font(.title3)
+                            .fontWeight(.semibold)
+                        Image(systemName: "plus.circle")
+                            .resizable()
+                            .frame(width: 30, height: 30)
+                            .scaledToFill()
+                            .padding(2)
+                    }
+                    .sheet(isPresented: $sheetPresented){
+                        AddExpenseView()
+                    }
+                }
             }
             .tabItem {
                 Image(systemName: "creditcard")
@@ -36,5 +55,5 @@ struct GroupView: View {
 }
 
 #Preview {
-    GroupView(currentGroup: ExpensesGroup(id: "0000", title: "Viaje Murcia", currency: "Euro", members: [], groupExpenses: []))
+    GroupView(currentGroup: ExpensesGroup(id: "0000", title: "Viaje Murcia", currency: "Euro", members: [], groupExpenses: [])).environmentObject(GroupViewModel())
 }

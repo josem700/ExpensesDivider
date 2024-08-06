@@ -16,12 +16,13 @@
 		425615E62C36FAEA0047CEF6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 425615E52C36FAEA0047CEF6 /* Preview Assets.xcassets */; };
 		425615F52C36FB680047CEF6 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 425615F42C36FB680047CEF6 /* LoginView.swift */; };
 		4261816D2C5A8B38002E26FC /* GroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4261816C2C5A8B37002E26FC /* GroupView.swift */; };
-		4261816F2C5A901C002E26FC /* ExpensesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4261816E2C5A901C002E26FC /* ExpensesView.swift */; };
 		426181742C5A974F002E26FC /* ExpensesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426181732C5A974F002E26FC /* ExpensesViewModel.swift */; };
 		4291AA072C37FC6000229FBA /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4291AA062C37FC6000229FBA /* InputView.swift */; };
 		4291AA092C3808A800229FBA /* RegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4291AA082C3808A800229FBA /* RegistrationView.swift */; };
 		4291AA0B2C38112F00229FBA /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4291AA0A2C38112F00229FBA /* ProfileView.swift */; };
 		4291AA0D2C38183F00229FBA /* SettingsRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4291AA0C2C38183F00229FBA /* SettingsRowView.swift */; };
+		42DBEDAC2C621ED800397B49 /* AddExpenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DBEDAB2C621ED800397B49 /* AddExpenseView.swift */; };
+		42DBEDAE2C625BDA00397B49 /* GroupParticipant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DBEDAD2C625BDA00397B49 /* GroupParticipant.swift */; };
 		42DCD5B72C53E43C0051CA4B /* GroupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DCD5B62C53E43C0051CA4B /* GroupViewModel.swift */; };
 		42DCD5B92C5400990051CA4B /* AddGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42DCD5B82C5400990051CA4B /* AddGroupView.swift */; };
 		42E542BE2C51160000B5A880 /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E542BD2C51160000B5A880 /* Group.swift */; };
@@ -46,12 +47,13 @@
 		425615E52C36FAEA0047CEF6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		425615F42C36FB680047CEF6 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		4261816C2C5A8B37002E26FC /* GroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupView.swift; sourceTree = "<group>"; };
-		4261816E2C5A901C002E26FC /* ExpensesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesView.swift; sourceTree = "<group>"; };
 		426181732C5A974F002E26FC /* ExpensesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpensesViewModel.swift; sourceTree = "<group>"; };
 		4291AA062C37FC6000229FBA /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		4291AA082C3808A800229FBA /* RegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationView.swift; sourceTree = "<group>"; };
 		4291AA0A2C38112F00229FBA /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		4291AA0C2C38183F00229FBA /* SettingsRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRowView.swift; sourceTree = "<group>"; };
+		42DBEDAB2C621ED800397B49 /* AddExpenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddExpenseView.swift; sourceTree = "<group>"; };
+		42DBEDAD2C625BDA00397B49 /* GroupParticipant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupParticipant.swift; sourceTree = "<group>"; };
 		42DCD5B62C53E43C0051CA4B /* GroupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupViewModel.swift; sourceTree = "<group>"; };
 		42DCD5B82C5400990051CA4B /* AddGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGroupView.swift; sourceTree = "<group>"; };
 		42E542BD2C51160000B5A880 /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 			children = (
 				42F23E342C3BE25900ABF80E /* User.swift */,
 				42E542BD2C51160000B5A880 /* Group.swift */,
+				42DBEDAD2C625BDA00397B49 /* GroupParticipant.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -201,7 +204,7 @@
 			isa = PBXGroup;
 			children = (
 				4261816C2C5A8B37002E26FC /* GroupView.swift */,
-				4261816E2C5A901C002E26FC /* ExpensesView.swift */,
+				42DBEDAB2C621ED800397B49 /* AddExpenseView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -334,9 +337,9 @@
 				4291AA072C37FC6000229FBA /* InputView.swift in Sources */,
 				425615E12C36FAE80047CEF6 /* ContentView.swift in Sources */,
 				425615DF2C36FAE80047CEF6 /* ExpensesDividerApp.swift in Sources */,
+				42DBEDAE2C625BDA00397B49 /* GroupParticipant.swift in Sources */,
 				42F23E352C3BE25900ABF80E /* User.swift in Sources */,
 				423A4C782C469B7D00C9130E /* MainTabView.swift in Sources */,
-				4261816F2C5A901C002E26FC /* ExpensesView.swift in Sources */,
 				423A4C762C46902E00C9130E /* PrincipalView.swift in Sources */,
 				42E542BE2C51160000B5A880 /* Group.swift in Sources */,
 				42F5C2B22C4AC68700173AC0 /* GroupViewCell.swift in Sources */,
@@ -347,6 +350,7 @@
 				4291AA0D2C38183F00229FBA /* SettingsRowView.swift in Sources */,
 				42F23E442C3BF98100ABF80E /* AuthViewModel.swift in Sources */,
 				42DCD5B92C5400990051CA4B /* AddGroupView.swift in Sources */,
+				42DBEDAC2C621ED800397B49 /* AddExpenseView.swift in Sources */,
 				42DCD5B72C53E43C0051CA4B /* GroupViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

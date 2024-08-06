@@ -24,7 +24,7 @@ class AuthViewModel: ObservableObject{
         //Comprueba si hay un usuario logueado al entrar en la app
         self.userSession = Auth.auth().currentUser
         self.userGroups = []
-        //signOut()
+        // signOut()
         Task{
             //Obtenemos datos del usuario
             await fetchUser()
@@ -55,12 +55,11 @@ class AuthViewModel: ObservableObject{
             let result = try await Auth.auth().createUser(withEmail: email, password: password)
             self.userSession = result.user
             //Rellenamos nuestro modelo local de usuario, lo creamos
-             let user = User(id: result.user.uid, name: name,surname: surname, email: email, createdAt: Date(),userGroups: [])
+            let user = User(id: email, name: name,surname: surname, email: email, createdAt: Date(),userGroups: [])
             //Una vez nuestro objeto usuario esta quedado, lo encodeamos
             let encodedUser = try Firestore.Encoder().encode(user)
             //Una vez todo creado correcto, subimos a Firebase nuestro nuevo usuario creado
             try await Firestore.firestore().collection("users").document(user.id).setData(encodedUser)
-            
             //Llamamos a fetchUser con await para que antes de que pase a la pantalla del perfil, ya esten cargados los datos del usuario
             await fetchUser()
         }catch{
@@ -89,13 +88,21 @@ class AuthViewModel: ObservableObject{
     func fetchUser() async {
         //Obtener datos de usuario
         //Id del usuario
-        guard let uid = Auth.auth().currentUser?.uid else { return }
+        guard let uid = Auth.auth().currentUser?.email else { return }
         
         //Firebase devuelve un objeto del tipo snapshot al obtener el documento de la coleccion
         guard let snapshot = try? await Firestore.firestore().collection("users").document(uid).getDocument() else {return}
         //Como la clase User es codable, podemos meterle directamente el usuario
         self.currentUser = try? snapshot.data(as: User.self)
         print("DEBUG: Usuario actual: \(String(describing: self.currentUser))")
+    }
+    
+    func fetchOneUser(userId: String) async -> User? {
+        //Firebase devuelve un objeto del tipo snapshot al obtener el documento de la coleccion
+        let snapshot = try? await Firestore.firestore().collection("users").document(userId).getDocument()
+        //Como la clase User es codable, podemos meterle directamente el usuario
+        guard let userReturn = try? snapshot!.data(as: User.self) else {return nil}
+       return userReturn
     }
     
     func fetchGroups() async{

@@ -15,7 +15,7 @@ struct HeaderView: View {
             VStack{
                 HStack{
                     Text("Hola, \(user?.name ?? "") 😁")
-                        .foregroundStyle(Color(.black))
+                        .foregroundStyle(Color(.systemMint))
                         .fontWeight(.semibold)
                         .font(.title2)
                     
