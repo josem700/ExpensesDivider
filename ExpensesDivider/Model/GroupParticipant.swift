@@ -8,10 +8,7 @@
 import Foundation
 
 struct Participant: Codable, Identifiable{
-    var id: String {
-        self.userId
-    }
-    var userId: String
+    var id: String
     var groupId: String
     var userName: String
     var userDebts: [String]

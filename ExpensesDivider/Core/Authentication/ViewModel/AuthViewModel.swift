@@ -42,6 +42,7 @@ class AuthViewModel: ObservableObject{
             self.userSession = result.user
             //Esperamos a que carguen los datos del usuario
             await fetchUser()
+            await fetchGroups()
         }catch{
             print("DEBUG: Failed to log in. Error: \(error.localizedDescription)")
         }

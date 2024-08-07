@@ -17,6 +17,8 @@ struct AddGroupView: View {
     @State private var groupUsers:[String] = []
     @Environment(\.dismiss) var dismiss
     @State private var showingAlert = false
+    @State private var showErrorAlert = false
+    @State private var showAddSelfError = false
     
     var body: some View {
         VStack(spacing: 24){
@@ -42,7 +44,11 @@ struct AddGroupView: View {
             }
             List() {
                 ForEach(groupUsers, id: \.self){user in
-                    Text(user)
+                    if(user == authVM.currentUser?.email){
+                        Text("Yo")
+                    }else{
+                        Text(user)
+                    }
                 }.onDelete(perform: { indexSet in
                     groupUsers.remove(atOffsets: indexSet)
                 })
@@ -60,14 +66,27 @@ struct AddGroupView: View {
                     
                 Button("Añadir Usuario", role: .none){
                     if(emailIsValid){
-                        groupUsers.append(newUser)
-                        newUser = ""
-                    }else{
-                        
+                        Task{
+                          let participant =  await authVM.fetchOneUser(userId: newUser)
+                            if(participant == nil){
+                                showingAlert = true
+                                newUser = ""
+                            }else if (participant?.email == authVM.currentUser?.email){
+                                showAddSelfError = true
+                                newUser = ""
+                            }else{
+                                groupUsers.append(newUser)
+                                newUser = ""
+                            }
+                        }
                     }
-                }
+                }.alert(isPresented: $showErrorAlert, content: {
+                    Alert(title: Text("Usuario no encontrado"),message: Text("Usuario no encontrado. Los usuarios deben estar previamente registrados."))
+                })
+                .alert(isPresented: $showAddSelfError, content: {
+                    Alert(title: Text("Ya estás en el grupo"),message: Text("No puedes añadirte a ti mismo, ya estás dentro del grupo."))
+                })
             }
-            .background(.clear)
             
             Button(){
                 showingAlert = true
@@ -100,6 +119,13 @@ struct AddGroupView: View {
             .clipShape(.rect(cornerRadius: 10))
             .padding(.top, 10)
             Spacer()
+        }.onAppear(){
+            if(authVM.currentUser?.email==nil){
+                //Esto es una chapuza pero no me dejaba hacerlo de otra forma
+                print(":D")
+            }else{
+                groupUsers = [authVM.currentUser!.email]
+            }
         }
     }
 }
@@ -118,4 +144,6 @@ extension AddGroupView: AuthenticationFormProtocol {
 
 #Preview {
     AddGroupView()
+        .environmentObject(AuthViewModel())
+        .environmentObject(GroupViewModel())
 }

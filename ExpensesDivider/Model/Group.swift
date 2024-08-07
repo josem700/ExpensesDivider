@@ -11,7 +11,7 @@ struct ExpensesGroup: Identifiable, Codable{
     var id: String
     var title: String
     var currency: String
-    var members: [String]
+    var members: [Participant]
     var groupExpenses: [String]
 }
 

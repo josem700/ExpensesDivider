@@ -32,8 +32,8 @@ struct InputView: View {
                     //.padding(10)
                     //.overlay(RoundedRectangle(cornerRadius: 12).stroke(Color(uiColor: orangeColor), lineWidth: 2))
             }
+            Divider()
         }
-        Divider()
     }
 }
 

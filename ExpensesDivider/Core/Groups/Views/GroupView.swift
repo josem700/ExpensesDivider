@@ -30,7 +30,7 @@ struct GroupView: View {
                             .padding(2)
                     }
                     .sheet(isPresented: $sheetPresented){
-                        AddExpenseView()
+                        AddExpenseView(currentGroup: .constant(currentGroup))
                     }
                 }
             }
